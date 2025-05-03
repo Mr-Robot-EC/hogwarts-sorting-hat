@@ -116,7 +116,7 @@ hogwarts_houses/
 
 ## License
 
-This project is licensed under the MIT License.
+This project is a fun way to showcase my skills with Python.
 
 ## Acknowledgements
 
