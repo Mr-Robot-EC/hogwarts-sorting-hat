@@ -28,7 +28,6 @@ env/
 # Flask
 instance/
 .webassets-cache
-backend/src/app/students.json
 
 # Node.js
 node_modules/
@@ -38,7 +37,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # Project specific
+backend/src/app/students.json
 backend/src/data/students.json
+*.json
 
 # IDE specific files
 .idea/
