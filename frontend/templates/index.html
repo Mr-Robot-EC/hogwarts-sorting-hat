@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogwarts Sorting Hat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Add specific styles to ensure proper display */
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .parchment {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="parchment">
+        <div class="container">
+            <header>
+                <h1 class="hogwarts-title">Hogwarts School of Witchcraft and Wizardry</h1>
+                <div class="hogwarts-crest"></div>
+            </header>
+            
+            <main>
+                <div class="sorting-intro">
+                    <h2>Welcome to the Sorting Ceremony</h2>
+                    <p class="quill-text">
+                        "Oh, you may not think I'm pretty,<br>
+                        But don't judge on what you see,<br>
+                        I'll eat myself if you can find<br>
+                        A smarter hat than me."
+                    </p>
+                    
+                    <div class="sorting-hat-image"></div>
+                    
+                    <p>The Sorting Hat awaits to place you in your Hogwarts house. Each house has produced outstanding witches and wizards, and each with its own noble history.</p>
+                    
+                    <form action="{{ url_for('sorting') }}" method="post">
+                        <div class="form-group">
+                            <label for="name">What is your name, young wizard?</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <button type="submit" class="hogwarts-btn">Begin Sorting</button>
+                    </form>
+                </div>
+            </main>
+            
+            <footer>
+                <nav>
+                    <a href="{{ url_for('index') }}">Home</a>
+                    <a href="{{ url_for('view_students') }}">View All Students</a>
+                </nav>
+                <p>&copy; {{ now.year }} Hogwarts School of Witchcraft and Wizardry</p>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            addParchmentEffect();
+        });
+    </script>
+</body>
+</html>

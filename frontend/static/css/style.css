@@ -1,0 +1,753 @@
+/* style.css */
+:root {
+  /* Base colors */
+  --parchment-color: #f2e8c9;
+  --ink-color: #2f2922;
+  --accent-color: #800020; /* Burgundy */
+
+  /* House colors */
+  --gryffindor-primary: #740001;
+  --gryffindor-secondary: #d3a625;
+  --hufflepuff-primary: #ffd800;
+  --hufflepuff-secondary: #000000;
+  --ravenclaw-primary: #0e1a40;
+  --ravenclaw-secondary: #946b2d;
+  --slytherin-primary: #1a472a;
+  --slytherin-secondary: #aaaaaa;
+
+  /* Dynamic house colors - will be set via JS */
+  --primary-house-color: #740001;
+  --secondary-house-color: #d3a625;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "MedievalSharp", serif;
+  background-color: #111;
+  color: var(--ink-color);
+  line-height: 1.6;
+  background-image: url("/static/images/hogwarts-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.parchment {
+  position: relative;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--parchment-color);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  overflow: revert-layer;
+}
+
+.parchment::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/static/images/parchment-texture.png");
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Cinzel Decorative", cursive;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.hogwarts-title {
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+.quill-text {
+  font-style: italic;
+  color: #444;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  font-family: inherit;
+  border: 2px solid #b4a284;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+.hogwarts-btn {
+  display: inline-block;
+  background: var(--accent-color);
+  color: white;
+  font-family: "MedievalSharp", serif;
+  font-size: 1rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.hogwarts-btn:hover {
+  background-color: #9b0f0f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hogwarts-btn.secondary {
+  background-color: #444;
+}
+
+.hogwarts-btn.secondary:hover {
+  background-color: #333;
+}
+
+/* Header and Footer */
+header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+}
+
+nav {
+  margin-bottom: 1rem;
+}
+
+nav a {
+  color: var(--accent-color);
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Home Page */
+.sorting-intro {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hogwarts-crest {
+  width: 150px;
+  height: 200px;
+  background-image: url("/static/images/hogwarts-crest.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 auto 2rem;
+}
+
+.sorting-hat-image {
+  width: 200px;
+  height: 200px;
+  background-image: url("/static/images/sorting-hat.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 2rem auto;
+  animation: floating 5s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Sorting Page */
+.sorting-ceremony {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.sorting-hat-animation {
+  width: 250px;
+  height: 250px;
+  background-image: url("/static/images/sorting-hat-animated.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 2rem;
+}
+
+.sorting-hat-animation.thinking {
+  background-image: url("/static/images/sorting-hat-thinking.gif");
+}
+
+.sorting-questions {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.student-name {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.question {
+  margin-bottom: 2rem;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+}
+
+.option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  margin: 0 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.option input[type="radio"] {
+  margin-bottom: 0.5rem;
+}
+
+.option-text {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.next-btn {
+  display: block;
+  margin: 1rem auto 0;
+}
+
+/* Result Page */
+.house-gryffindor {
+  background-color: var(--gryffindor-primary);
+  background-image: linear-gradient(rgba(116, 0, 1, 0.7), rgba(116, 0, 1, 0.7)),
+    url("/static/images/gryffindor-bg.jpg");
+}
+
+.house-hufflepuff {
+  background-color: var(--hufflepuff-primary);
+  background-image: linear-gradient(
+      rgba(255, 216, 0, 0.7),
+      rgba(255, 216, 0, 0.7)
+    ),
+    url("/static/images/hufflepuff-bg.jpg");
+}
+
+.house-ravenclaw {
+  background-color: var(--ravenclaw-primary);
+  background-image: linear-gradient(
+      rgba(14, 26, 64, 0.7),
+      rgba(14, 26, 64, 0.7)
+    ),
+    url("/static/images/ravenclaw-bg.jpg");
+}
+
+.house-slytherin {
+  background-color: var(--slytherin-primary);
+  background-image: linear-gradient(
+      rgba(26, 71, 42, 0.7),
+      rgba(26, 71, 42, 0.7)
+    ),
+    url("/static/images/slytherin-bg.jpg");
+}
+
+.sorting-result {
+  text-align: center;
+}
+
+.special-message {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 2rem;
+  animation: fadeIn 2s;
+}
+
+.announcement {
+  margin-bottom: 2rem;
+}
+
+.sorting-hat-announce {
+  width: 200px;
+  height: 200px;
+  background-image: url("/static/images/sorting-hat-speak.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 auto 1rem;
+}
+
+.house-announcement {
+  font-size: 3.5rem;
+  color: var(--primary-house-color);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: reveal 1.5s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.house-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.house-crest {
+  width: 200px;
+  height: 200px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 2rem;
+  animation: floatCrest 4s ease-in-out infinite;
+}
+
+@keyframes floatCrest {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(10px) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.house-gryffindor-crest {
+  background-image: url("/static/images/gryffindor-crest.png");
+}
+
+.house-hufflepuff-crest {
+  background-image: url("/static/images/hufflepuff-crest.png");
+}
+
+.house-ravenclaw-crest {
+  background-image: url("/static/images/ravenclaw-crest.png");
+}
+
+.house-slytherin-crest {
+  background-image: url("/static/images/slytherin-crest.png");
+}
+
+.house-info {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.house-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.house-details p {
+  margin: 0.5rem 1rem;
+}
+
+.house-description {
+  margin-bottom: 2rem;
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.house-members {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.famous-members {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.famous-members li {
+  margin: 0.5rem 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+/* Harry Special Page */
+.harry-special {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sorting-hat-special {
+  width: 250px;
+  height: 250px;
+  background-image: url("/static/images/sorting-hat-thinking.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 auto 2rem;
+}
+
+.dialogue {
+  margin-bottom: 2rem;
+}
+
+.dialogue-box {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+  display: none;
+}
+
+.dialogue-box.active {
+  opacity: 1;
+  transform: translateY(0);
+  display: block;
+}
+
+.hat-speech {
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
+.harry-thought {
+  background-color: rgba(116, 0, 1, 0.1);
+  border-left: 5px solid var(--gryffindor-primary);
+}
+
+.final-decision {
+  margin: 2rem 0;
+}
+
+/* Students Page */
+.student-registry {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.registry-filters {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.6rem 1.2rem;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #444;
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.house-gryffindor-btn {
+  background-color: var(--gryffindor-primary);
+}
+
+.house-hufflepuff-btn {
+  background-color: var(--hufflepuff-primary);
+  color: black;
+}
+
+.house-ravenclaw-btn {
+  background-color: var(--ravenclaw-primary);
+}
+
+.house-slytherin-btn {
+  background-color: var(--slytherin-primary);
+}
+
+.house-stats {
+  margin-bottom: 2rem;
+}
+
+.stat-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.house-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-crest {
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.house-gryffindor-crest-small {
+  background-image: url("/static/images/gryffindor-crest.png");
+}
+
+.house-hufflepuff-crest-small {
+  background-image: url("/static/images/hufflepuff-crest.png");
+}
+
+.house-ravenclaw-crest-small {
+  background-image: url("/static/images/ravenclaw-crest.png");
+}
+
+.house-slytherin-crest-small {
+  background-image: url("/static/images/slytherin-crest.png");
+}
+
+.stat-count {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.total-stat {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.students-table-container {
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.students-table th,
+.students-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.students-table th {
+  background-color: rgba(0, 0, 0, 0.1);
+  font-family: "Cinzel Decorative", cursive;
+  font-weight: bold;
+}
+
+.house-gryffindor-row {
+  border-left: 5px solid var(--gryffindor-primary);
+}
+
+.house-hufflepuff-row {
+  border-left: 5px solid var(--hufflepuff-primary);
+}
+
+.house-ravenclaw-row {
+  border-left: 5px solid var(--ravenclaw-primary);
+}
+
+.house-slytherin-row {
+  border-left: 5px solid var(--slytherin-primary);
+}
+
+.house-badge {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.house-gryffindor-badge {
+  background-color: var(--gryffindor-primary);
+}
+
+.house-hufflepuff-badge {
+  background-color: var(--hufflepuff-primary);
+  color: black;
+}
+
+.house-ravenclaw-badge {
+  background-color: var(--ravenclaw-primary);
+}
+
+.house-slytherin-badge {
+  background-color: var(--slytherin-primary);
+}
+
+.empty-message {
+  text-align: center;
+  font-style: italic;
+  padding: 2rem !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .parchment {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .hogwarts-title {
+    font-size: 2rem;
+  }
+
+  .options {
+    flex-direction: column;
+  }
+
+  .option {
+    margin: 0.5rem 0;
+  }
+
+  .house-reveal {
+    flex-direction: column;
+  }
+
+  .house-announcement {
+    font-size: 2.5rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .hogwarts-btn {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}

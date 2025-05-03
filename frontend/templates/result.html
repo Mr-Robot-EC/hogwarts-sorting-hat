@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Results - Hogwarts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="house-{{ house|lower }}">
+    <div class="parchment">
+        <div class="container">
+            <header>
+                <h1 class="hogwarts-title">The Sorting Hat Has Decided!</h1>
+            </header>
+            
+            <main>
+                <div class="sorting-result">
+                    {% if special_message %}
+                    <p class="special-message">{{ special_message }}</p>
+                    {% endif %}
+                    
+                    <div class="announcement">
+                        <div class="sorting-hat-announce"></div>
+                        <h2 class="house-announcement">{{ house }}!</h2>
+                    </div>
+                    
+                    <div class="house-reveal">
+                        <div class="house-crest house-{{ house|lower }}-crest"></div>
+                        
+                        <div class="house-info">
+                            <h3>Welcome to {{ house }}, {{ name }}!</h3>
+                            <div class="house-details">
+                                <p><strong>Founder:</strong> {{ house_data.founder }}</p>
+                                <p><strong>Values:</strong> {{ house_data.house_values|join(', ') }}</p>
+                                <p><strong>Symbol:</strong> {{ house_data.symbol }}</p>
+                                <p><strong>Colors:</strong> 
+                                    <span style="color: '{{ house_data.colors[0] }}';">&#9632;</span>
+                                    <span style="color: '{{ house_data.colors[1] }}';">&#9632;</span>
+                                </p>
+                            </div>
+                            
+                            <div class="house-description">
+                                <p>{{ house_data.description }}</p>
+                            </div>
+                            
+                            <div class="house-members">
+                                <h4>Famous {{ house }} Members:</h4>
+                                <ul class="famous-members">
+                                    {% if house == 'Gryffindor' %}
+                                    <li>Albus Dumbledore</li>
+                                    <li>Harry Potter</li>
+                                    <li>Hermione Granger</li>
+                                    <li>Minerva McGonagall</li>
+                                    {% elif house == 'Hufflepuff' %}
+                                    <li>Cedric Diggory</li>
+                                    <li>Newt Scamander</li>
+                                    <li>Nymphadora Tonks</li>
+                                    <li>Pomona Sprout</li>
+                                    {% elif house == 'Ravenclaw' %}
+                                    <li>Luna Lovegood</li>
+                                    <li>Filius Flitwick</li>
+                                    <li>Rowena Ravenclaw</li>
+                                    <li>Cho Chang</li>
+                                    {% elif house == 'Slytherin' %}
+                                    <li>Severus Snape</li>
+                                    <li>Draco Malfoy</li>
+                                    <li>Merlin</li>
+                                    <li>Horace Slughorn</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <a href="{{ url_for('index') }}" class="hogwarts-btn">Sort Another Student</a>
+                        <a href="{{ url_for('view_students') }}" class="hogwarts-btn secondary">View All Students</a>
+                    </div>
+                </div>
+            </main>
+            
+            <footer>
+                <p>&copy; Hogwarts School of Witchcraft and Wizardry</p>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            addParchmentEffect();
+            
+            // Animate house announcement
+            const announcement = document.querySelector('.house-announcement');
+            announcement.classList.add('revealed');
+            
+            // Play house-specific sound
+            playHouseRevealSound('{{ house|lower }}');
+            
+            // Apply house colors dynamically
+            applyHouseTheme('{{ house|lower }}', '{{ house_data.colors|tojson }}');
+        });
+        
+        function playHouseRevealSound(house) {
+            // Sound effect for house reveal
+            console.log(`Playing ${house} reveal sound`);
+        }
+        
+        function applyHouseTheme(house, colors) {
+            document.documentElement.style.setProperty('--primary-house-color', colors[0]);
+            document.documentElement.style.setProperty('--secondary-house-color', colors[1]);
+        }
+    </script>
+</body>
+</html>

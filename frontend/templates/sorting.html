@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sorting Hat - Hogwarts</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="parchment sorting-bg">
+        <div class="container">
+            <header>
+                <h1 class="hogwarts-title">The Sorting Hat</h1>
+            </header>
+            
+            <main>
+                <div class="sorting-ceremony">
+                    <div class="sorting-hat-animation"></div>
+                    
+                    <div class="sorting-questions">
+                        <h2>Hmm, difficult... very difficult...</h2>
+                        <p>Hello, <span class="student-name">{{ name }}</span>. To determine your true house, I must look into your mind. Answer these questions truthfully.</p>
+                        
+                        <form action="/result" method="post" id="sortingForm">
+                            <input type="hidden" name="name" value="{{ name }}">
+                            
+                            {% for i, question in enumerate(questions) %}
+                            <div class="question" id="question-{{ i }}" {% if i > 0 %}style="display: none;"{% endif %}>
+                                <h3>{{ question.question }}</h3>
+                                <div class="options">
+                                    <label class="option">
+                                        <input type="radio" name="q{{ i }}" value="0" required>
+                                        <span class="option-text">{{ question.options[0] }}</span>
+                                    </label>
+                                    <label class="option">
+                                        <input type="radio" name="q{{ i }}" value="1">
+                                        <span class="option-text">{{ question.options[1] }}</span>
+                                    </label>
+                                </div>
+                                
+                                {% if i < questions|length - 1 %}
+                                <button type="button" class="hogwarts-btn next-btn" onclick="showNextQuestion({{ i }})">Next</button>
+                                {% else %}
+                                <button type="submit" class="hogwarts-btn">Reveal My House</button>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </form>
+                    </div>
+                </div>
+            </main>
+            
+            <footer>
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/students">View All Students</a>
+                </nav>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="/static/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            addParchmentEffect();
+            addSortingHatAnimations();
+        });
+        
+        function showNextQuestion(currentIndex) {
+            const currentQuestion = document.getElementById(`question-${currentIndex}`);
+            const nextQuestion = document.getElementById(`question-${currentIndex + 1}`);
+            
+            if (document.querySelector(`input[name="q${currentIndex}"]:checked`)) {
+                currentQuestion.style.display = 'none';
+                nextQuestion.style.display = 'block';
+                
+                // Add hat thinking animation
+                playHatThinkingSound();
+            } else {
+                alert("You must select an answer before proceeding.");
+            }
+        }
+        
+        function playHatThinkingSound() {
+            // Sound effect logic here
+            const hatElem = document.querySelector('.sorting-hat-animation');
+            hatElem.classList.add('thinking');
+            setTimeout(() => {
+                hatElem.classList.remove('thinking');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

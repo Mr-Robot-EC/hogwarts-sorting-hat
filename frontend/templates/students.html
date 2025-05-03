@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogwarts Students</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="parchment">
+        <div class="container">
+            <header>
+                <h1 class="hogwarts-title">Hogwarts Student Registry</h1>
+                <div class="hogwarts-crest"></div>
+            </header>
+            
+            <main>
+                <div class="student-registry">
+                    <div class="registry-filters">
+                        <button class="filter-btn active" data-house="all">All Houses</button>
+                        {% for house in houses %}
+                        <button class="filter-btn house-{{ house|lower }}-btn" data-house="{{ house }}">{{ house }}</button>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="house-stats">
+                        <div class="stat-container">
+                            {% for house in houses %}
+                            <div class="house-stat" id="{{ house|lower }}-stat">
+                                <div class="stat-crest house-{{ house|lower }}-crest-small"></div>
+                                <div class="stat-count" id="{{ house|lower }}-count">0</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="total-stat">
+                            <span>Total Students:</span>
+                            <span id="total-count">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="students-table-container">
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>House</th>
+                                    <th>Sorting Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <!-- Student rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <a href="{{ url_for('index') }}" class="hogwarts-btn">Back to Sorting Hat</a>
+                </div>
+            </main>
+            
+            <footer>
+                <p>&copy; Hogwarts School of Witchcraft and Wizardry</p>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            addParchmentEffect();
+            loadStudents();
+            
+            // Set up filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    loadStudents(this.dataset.house !== 'all' ? this.dataset.house : null);
+                });
+            });
+        });
+        
+        function loadStudents(houseFilter = null) {
+            const url = houseFilter ? 
+                `/api/students?house=${houseFilter}` : 
+                '/api/students';
+                
+            fetch(url)
+                .then(response => response.json())
+                .then(students => {
+                    displayStudents(students);
+                    updateStats(students);
+                })
+                .catch(error => console.error('Error loading students:', error));
+        }
+        
+        function displayStudents(students) {
+            const tableBody = document.getElementById('studentsTableBody');
+            tableBody.innerHTML = '';
+            
+            if (students.length === 0) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="3" class="empty-message">No students found</td>`;
+                tableBody.appendChild(emptyRow);
+                return;
+            }
+            
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                row.className = `house-${student.house.toLowerCase()}-row`;
+                
+                row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>
+                        <span class="house-badge house-${student.house.toLowerCase()}-badge">
+                            ${student.house}
+                        </span>
+                    </td>
+                    <td>${student.date_sorted}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        function updateStats(students) {
+            // Update total count
+            document.getElementById('total-count').textContent = students.length;
+            
+            // Reset all counts
+            const houses = ['gryffindor', 'hufflepuff', 'ravenclaw', 'slytherin'];
+            houses.forEach(house => {
+                document.getElementById(`${house}-count`).textContent = '0';
+            });
+            
+            // Count by house
+            const houseCounts = {};
+            students.forEach(student => {
+                const house = student.house.toLowerCase();
+                houseCounts[house] = (houseCounts[house] || 0) + 1;
+            });
+            
+            // Update house counts
+            for (const [house, count] of Object.entries(houseCounts)) {
+                document.getElementById(`${house}-count`).textContent = count;
+            }
+        }
+    </script>
+</body>
+</html>
