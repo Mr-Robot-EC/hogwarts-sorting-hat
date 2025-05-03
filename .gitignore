@@ -28,6 +28,7 @@ env/
 # Flask
 instance/
 .webassets-cache
+backend/src/app/students.json
 
 # Node.js
 node_modules/
